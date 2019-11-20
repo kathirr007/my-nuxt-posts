@@ -9,7 +9,7 @@
     >
       <v-list>
         <v-list-item
-          v-for="(item, i) in items"
+          v-for="(item, i) in menuItems"
           :key="i"
           :to="item.to"
           router
@@ -33,6 +33,32 @@
       <v-spacer />
       <v-toolbar-title v-text="title" />
       <v-spacer />
+      <v-menu
+      bottom
+      origin="center center"
+      transition="scale-transition"
+      class="d-none d-sm-block"
+    >
+      <template v-slot:activator="{ on }">
+        <v-btn
+          dark
+          v-on="on"
+          class="d-none d-sm-block"
+        >
+          Scale Transition
+        </v-btn>
+      </template>
+
+      <v-list>
+        <v-list-item
+          v-for="(item, i) in menuItems"
+          :key="i"
+          :to="item.to"
+        >
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
     </v-app-bar>
     <v-content>
       <v-container>
@@ -49,13 +75,12 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      items: [
+      menuItems: [
         {
           icon: 'mdi-apps',
           title: 'Welcome',
           to: '/'
-        },
-        {
+        }, {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
           to: '/inspire'
@@ -69,3 +94,15 @@ export default {
   }
 }
 </script>
+
+
+                          {
+                            icon: 'mdi-apps',
+                            title: 'Welcome',
+                            to: '/'
+                          },
+                          {
+                            icon: 'mdi-chart-bubble',
+                            title: 'Inspire',
+                            to: '/inspire'
+                          }
