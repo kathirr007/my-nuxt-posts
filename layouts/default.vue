@@ -30,7 +30,6 @@
       app
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-spacer />
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <v-menu
@@ -55,13 +54,19 @@
           :key="i"
           :to="item.to"
         >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
+          <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title" />
+          </v-list-item-content>
+          <!-- <v-list-item-title>{{ item.title }}</v-list-item-title> -->
         </v-list-item>
       </v-list>
     </v-menu>
     </v-app-bar>
     <v-content>
-      <v-container>
+      <v-container fluid>
         <nuxt />
       </v-container>
     </v-content>

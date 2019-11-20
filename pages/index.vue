@@ -1,17 +1,14 @@
 <template>
-  <v-layout
-    column
-    justify-center
-    align-center
-  >
-    <v-flex
-      xs12
-      sm8
-      md6
+    <v-row
+      column
+      justify-center
+      align-center
     >
+     <v-col cols="10" offset="1">
       <div class="text-center">
-        <logo />
-        <vuetify-logo />
+        <h1>
+          Welcome to My Blog
+        </h1>
       </div>
       <v-card>
         <v-card-title class="headline">
@@ -75,8 +72,8 @@
           </v-btn>
         </v-card-actions>
       </v-card>
-    </v-flex>
-  </v-layout>
+     </v-col>
+    </v-row>
 </template>
 
 <script>
