@@ -10,8 +10,7 @@
           Welcome to My Blog
         </h1>
       </div>
-      <post-item />
-      <post-item />
+      <post-item v-for="post in posts" :title="post.title" :subtitle="post.subtitle" :key="post._id" :date="post.createdAt" :isRead="post.isRead" />
      </v-col>
     </v-row>
 </template>
@@ -20,6 +19,27 @@
 import PostItem from '~/components/PostItem'
 
 export default {
+  data() {
+    return {
+      title: "My Title from Parent Component",
+      posts: [
+        {
+          _id: 1,
+          title: "First Post Title",
+          subtitle: "First Post Subtitle",
+          createdAt: new Date(),
+          isRead: false,
+        },
+        {
+          _id: 2,
+          title: "Second Post Title",
+          subtitle: "Second Post Subtitle",
+          createdAt: new Date(),
+          isRead: false,
+        },
+      ],
+    }
+  },
   components: {
     PostItem,
   }

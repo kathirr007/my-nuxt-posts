@@ -1,19 +1,20 @@
 <template>
   <v-card>
     <v-card-title class="headline">
-      Welcome to the Vuetify + Nuxt.js template
+      {{title}}
     </v-card-title>
     <v-card-subtitle class="subtitle-1 font-weight-normal white--text">
-      Here goes the subtitle
+      {{subtitle}}
     </v-card-subtitle>
     <v-card-text>
       <p>Blog contents goes here...</p>
 
       <div class="text-xs-right">
-        <em><small>&mdash; John Leider</small></em>
+        <em><small>&mdash; John Leider,</small></em> {{date | formatDate}}
       </div>
     </v-card-text>
     <v-card-actions>
+      <v-switch dense v-model="isRead" color="primary" class="ma-2" :label="isRead ? 'Read' : 'UnRead'"></v-switch>
       <v-spacer />
       <v-btn dark nuxt to="/inspire">
         View indetails
@@ -23,8 +24,36 @@
 </template>
 
 <script>
+  import moment from 'moment'
   export default {
-
+    data() {
+      return {
+        moment
+      }
+    },
+    methods:{
+      /* formatDate(date) {
+        return moment(date).format('LLL')
+      } */
+    },
+    props: {
+      title: {
+        type: String,
+        required: true
+      },
+      subtitle: {
+        type: String,
+        required: false
+      },
+      date: {
+        type: Date,
+        required: false
+      },
+      isRead: {
+        type: Boolean,
+        required: false
+      }
+    }
   }
 
 </script>
