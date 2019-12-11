@@ -30,12 +30,34 @@
       app
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title>
+        <nuxt-link to="/" tag="span" style="cursor: pointer">{{title}}</nuxt-link>
+      </v-toolbar-title>
       <v-spacer />
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+          <!-- <v-btn color="primary" dark v-on="on">Button</v-btn> -->
+          <v-btn icon dark v-on="on" class="mr-2" href="https://github.com/kathirr007/my-nuxt-posts" target="_blank">
+            <v-icon>mdi-github-circle</v-icon>
+          </v-btn>
+        </template>
+        <span>View on Github</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn icon dark class="mr-2" v-on="on" href="https://github.com/kathirr007/nuxt-posts" target="_blank">
+            <v-icon>mdi-github-circle</v-icon>
+          </v-btn>
+        </template>
+        <span>View on Github of original reference</span>
+      </v-tooltip>
+
+      <!-- <a href="https://github.com/kathirr007/nuxt-posts" target="_blank">
+      </a> -->
       <v-menu
       bottom
       origin="center center"
-      transition="scale-transition"
+      transition="slide-y-transition"
       class="d-none d-sm-block"
     >
       <template v-slot:activator="{ on }">
@@ -44,7 +66,7 @@
           v-on="on"
           class="d-none d-sm-block"
         >
-          Scale Transition
+          Menu
         </v-btn>
       </template>
 
@@ -67,7 +89,9 @@
     </v-app-bar>
     <v-content>
       <v-container fluid>
-        <nuxt />
+        <transition name="fade" mode="out-in">
+          <nuxt />
+        </transition>
       </v-container>
     </v-content>
   </v-app>
@@ -96,7 +120,12 @@ export default {
       rightDrawer: false,
       title: 'Blog App using Nuxt.js And Vuetify'
     }
-  }
+  },
+  transition: 'slide-right',
+  /* transition (to, from) {
+    if (!from) { return 'slide-left' }
+    return +to.query.page < +from.query.page ? 'slide-right' : 'slide-left'
+  } */
 }
 </script>
 

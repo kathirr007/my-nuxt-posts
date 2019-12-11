@@ -22,22 +22,7 @@ export default {
   data() {
     return {
       title: "My Title from Parent Component",
-      posts: [
-        {
-          _id: 1,
-          title: "First Post Title",
-          subtitle: "First Post Subtitle",
-          createdAt: new Date(),
-          isRead: false,
-        },
-        {
-          _id: 2,
-          title: "Second Post Title",
-          subtitle: "Second Post Subtitle",
-          createdAt: new Date(),
-          isRead: false,
-        },
-      ],
+      posts: this.$store.state.posts
     }
   },
   components: {

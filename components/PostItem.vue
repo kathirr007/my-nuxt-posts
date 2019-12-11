@@ -14,7 +14,7 @@
       </div>
     </v-card-text>
     <v-card-actions>
-      <v-switch dense v-model="isRead" color="primary" class="ma-2" :label="isRead ? 'Read' : 'UnRead'"></v-switch>
+        <v-switch dense v-model="isReadChecked" color="primary" class="ma-2" :label="readLabel()"></v-switch>
       <v-spacer />
       <v-btn dark nuxt to="/inspire">
         View indetails
@@ -28,13 +28,17 @@
   export default {
     data() {
       return {
-        moment
+        moment,
+        isReadChecked: this.isRead ? true : false
       }
     },
     methods:{
       /* formatDate(date) {
         return moment(date).format('LLL')
       } */
+      readLabel() {
+        return this.isReadChecked ? 'Read' : 'UnRead'
+      }
     },
     props: {
       title: {
