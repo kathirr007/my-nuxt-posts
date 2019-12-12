@@ -23,11 +23,13 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  // loading: { color: '#1976d2' },
+  loading: false,
   /*
   ** Global CSS
   */
   css: [
+    '~/assets/main.css'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -71,12 +73,24 @@ module.exports = {
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
+          error: colors.red.accent3,
           success: colors.green.accent3
         }
       }
     }
   },
+  /* Page Transitions */
+  pageTransition:{
+    name: 'page',
+    mode: 'out-in'
+  },
+  /* Page Transitions ends */
+  /* Layout Transitions */
+  layoutTransition:{
+    name: 'layout',
+    mode: 'out-in'
+  },
+  /* Layout Transitions ends */
   /*
   ** Build configuration
   */

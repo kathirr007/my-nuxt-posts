@@ -43,9 +43,7 @@
     </nav> -->
     <v-row>
       <aside class="col col-2">
-        <v-btn dark nuxt @click.stop to="/inspire">
-          Create
-        </v-btn>
+        <Modal />
       </aside>
       <v-col cols="4">
         <v-hover v-for="post in posts" :key="post._id" v-slot:default="{ hover }">
@@ -93,32 +91,51 @@
     </v-row>
     <footer class="footer">
       <v-divider />
-      <v-container fluid class="text-center">
-          <p>
+      <v-container fluid class="text-center py-0">
+          <v-col cols="12">
             <strong>Blog Created </strong> by <a href="https://github.com/kathirr007">kathirr007</a>. The source
             code is available at
-            <v-tooltip bottom>
+            <v-tooltip bottom tag="span">
               <template v-slot:activator="{ on }">
-                <!-- <v-btn color="primary" dark v-on="on">Button</v-btn> -->
                 <v-btn icon dark v-on="on" class="mr-2" href="https://github.com/kathirr007/my-nuxt-posts" target="_blank">
                   <v-icon>mdi-github-circle</v-icon>
                 </v-btn>
               </template>
               <span>View on Github</span>
             </v-tooltip>
-          </p>
+          </v-col>
       </v-container>
     </footer>
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+  import Modal from '~/components/shared/Modal'
   export default {
     data() {
       return {
-        posts: this.$store.state.posts,
+        // posts: this.$store.state.posts,
       }
+    },
+    components: {
+      Modal
+    },
+    fetch({store}) {
+      if(store.state.posts.items.length === 0) {
+      console.log('Fetching data in manage page')
+      return store.dispatch('posts/fetchPosts')
     }
+    },
+    computed: {
+      ...mapState({
+        posts: (state) => state.posts.items
+      })
+    },
+    transition (to, from) {
+      if (!from) { return 'slide-left' }
+      return  'slide-right'
+    },
   }
 </script>
 

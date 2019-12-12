@@ -89,9 +89,7 @@
     </v-app-bar>
     <v-content>
       <v-container fluid>
-        <transition name="fade" mode="out-in">
           <nuxt />
-        </transition>
       </v-container>
     </v-content>
   </v-app>
@@ -106,13 +104,13 @@ export default {
       fixed: false,
       menuItems: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
+          icon: 'mdi-home',
+          title: 'Home',
           to: '/'
         }, {
           icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          title: 'Manage',
+          to: '/manage'
         }
       ],
       miniVariant: false,
@@ -120,23 +118,9 @@ export default {
       rightDrawer: false,
       title: 'Blog App using Nuxt.js And Vuetify'
     }
-  },
-  transition: 'slide-right',
-  /* transition (to, from) {
-    if (!from) { return 'slide-left' }
-    return +to.query.page < +from.query.page ? 'slide-right' : 'slide-left'
-  } */
+  }
 }
 </script>
 
-
-                          {
-                            icon: 'mdi-apps',
-                            title: 'Welcome',
-                            to: '/'
-                          },
-                          {
-                            icon: 'mdi-chart-bubble',
-                            title: 'Inspire',
-                            to: '/inspire'
-                          }
+<style lang="scss">
+</style>

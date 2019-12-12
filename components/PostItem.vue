@@ -9,14 +9,14 @@
     <v-card-text>
       <p>Blog contents goes here...</p>
 
-      <div class="text-xs-right">
+      <div class="text-left text-sm-right">
         <em><small>&mdash; John Leider,</small></em> {{date | formatDate}}
       </div>
     </v-card-text>
-    <v-card-actions>
-        <v-switch dense v-model="isReadChecked" color="primary" class="ma-2" :label="readLabel()"></v-switch>
+    <v-card-actions class="flex-column flex-sm-row">
+        <v-switch dense v-model="isReadChecked" color="primary" class="align-self-start mx-2 my-0" :label="readLabel()"></v-switch>
       <v-spacer />
-      <v-btn dark nuxt to="/inspire">
+      <v-btn dark nuxt to="/inspire" class="align-self-end align-self-sm-start">
         View indetails
       </v-btn>
     </v-card-actions>
@@ -71,6 +71,18 @@
         margin: 0;
       }
     }
+/*     .v-input--selection-controls {
+      &.v-input--switch {
+        .v-input__control {
+          .v-input__slot {
+            margin: 0;
+          }
+          .v-messages {
+            display: none;
+          }
+        }
+      }
+    } */
   }
 
 </style>
