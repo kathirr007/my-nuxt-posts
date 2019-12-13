@@ -5,43 +5,40 @@
     </v-btn> -->
     <v-dialog v-model="dialog" persistent max-width="75%">
       <template v-slot:activator="{ on }">
-        <v-btn dark v-on="on">Create</v-btn>
+        <v-btn dark v-on="on" @click="loading = false">Create</v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <h1 class="headline">Create new post</h1>
+          <h1 class="headline mb-3">Create new post</h1>
         </v-card-title>
         <v-card-text>
-          <v-form v-model="valid">
-            <v-container>
-              <v-row>
-                <v-col cols="12">
-                  <v-text-field label="Title*" v-model="title" :rules="titleRules" required></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field label="Sub Title*" v-model="subtitle" :rules="subtitleRules" required></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-textarea
-                    class=""
-                    label="Content"
-                    rows="1"
-                    auto-grow
-                    outlined
-                    :rules="contentRules"
-                    v-model="content"
-                    :counter="250"
-                  ></v-textarea>
-                </v-col>
-              </v-row>
-            </v-container>
-            <small>*indicates required field</small>
-          </v-form>
+          <slot />
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="" dark @click="dialog = false">Close</v-btn>
-          <v-btn color="" dark @click="dialog = false">Create</v-btn>
+          <!-- <v-btn
+            class="ma-2"
+            :loading="loading"
+            :disabled="!valid"
+            color="info"
+            @click="loader"
+          >
+            Icon Loader
+            <template v-slot:loader>
+              <span class="custom-loader">
+                <v-icon light>mdi-cached</v-icon>
+              </span>
+            </template>
+          </v-btn> -->
+          <v-btn color="" dark :loading="loading" :disabled="!valid" @click="createPostSubmitted">
+            Create
+            <template v-slot:loader>
+              <span class="custom-loader">
+                <v-icon light>mdi-cached</v-icon>
+              </span>
+            </template>
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -53,27 +50,76 @@
     data() {
       return {
         dialog: false,
-        valid: false,
-        title: '',
-        subtitle: '',
-        content: '',
-        titleRules: [
-          v => !!v || 'Title is required',
-          v => v.length <= 100 || 'Name must be less than 100 characters',
-        ],
-        subtitleRules: [
-          v => !!v || 'Sub Title is required',
-          v => v.length <= 100 || 'Subtitle must be less than 100 characters',
-        ],
-        contentRules: [
-          v => !!v || 'Content is required',
-          v => v.length >= 100 || 'Content more be less than 100 characters',
-        ],
+        loading: false,
       }
-    }
+    },
+    props:{
+      valid: {
+        type: Boolean,
+        required: true
+      },
+      /* loading: {
+        type: Boolean,
+        required: true
+      } */
+    },
+
+    /* watch: {
+      loader () {
+        const l = this.loader
+        this[l] = !this[l]
+
+        setTimeout(() => (this[l] = false), 3000)
+
+        this.loader = null
+      },
+    }, */
+    methods: {
+      createPostSubmitted(){
+        console.log('Submitted Create Post Form..')
+        this.$emit('createPostSubmitted')
+        this.dialog = false
+        this.loading = true
+      }
+    },
   }
 </script>
 
 <style lang="scss" scoped>
-
+  .custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+  }
+  @-moz-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 </style>

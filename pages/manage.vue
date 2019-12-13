@@ -42,17 +42,18 @@
       </div>
     </nav> -->
     <v-row>
-      <aside class="col col-2">
-        <Modal />
+      <aside class="col" cols="12" md="2">
+        <post-create />
       </aside>
-      <v-col cols="4">
+      <v-col cols="12" md="4">
         <v-hover v-for="post in posts" :key="post._id" v-slot:default="{ hover }">
-          <v-card color="" dark :elevation="hover ? 12 : 2">
+          <v-card :class="{'is-active': activePost && post._id === activePost._id}" color="" dark :elevation="hover ? 12 : 2" @click="activatePost(post)">
             <v-card-title class="headline">{{post.title}}</v-card-title>
-            <v-card-subtitle>
+            <v-card-subtitle class="font-italic">
               {{post.subtitle}}
             </v-card-subtitle>
             <v-card-text>
+              <p>{{post.content}}</p>
               <div class="text-right">
                 <em><small>From John Leider</small></em>
               </div>
@@ -72,21 +73,8 @@
           </v-card>
         </v-hover> -->
       </v-col>
-      <v-col cols="6" class="d-none" id="message-pane">
-        <div class="box message-preview">
-          <div class="top">
-            <div class="avatar">
-              <img src="https://placehold.it/128x128">
-            </div>
-            <div class="address">
-              <div class="name">John Smith</div>
-              <div class="email">someone@gmail.com</div>
-            </div>
-            <hr>
-            <div class="content">
-            </div>
-          </div>
-        </div>
+      <v-col cols="12" md="6" class="" id="message-pane">
+        <post-manage :postData="activePost" />
       </v-col>
     </v-row>
     <footer class="footer">
@@ -111,26 +99,43 @@
 
 <script>
   import { mapState } from 'vuex'
-  import Modal from '~/components/shared/Modal'
+  import PostCreate from '~/components/PostCreate'
+  import PostManage from '~/components/PostManage'
   export default {
+    components: {
+      PostCreate, PostManage
+    },
     data() {
       return {
         // posts: this.$store.state.posts,
+        activePost: {},
       }
-    },
-    components: {
-      Modal
-    },
-    fetch({store}) {
-      if(store.state.posts.items.length === 0) {
-      console.log('Fetching data in manage page')
-      return store.dispatch('posts/fetchPosts')
-    }
     },
     computed: {
       ...mapState({
         posts: (state) => state.posts.items
-      })
+      }),
+      isActivePost() {
+        if(this.activePost && this.post._id === this.activePost._id) {
+          return 'primary'
+        }
+      }
+    },
+    fetch({store}) {
+      if(store.state.posts.items.length === 0) {
+        console.log('Fetching data in manage page')
+        return store.dispatch('posts/fetchPosts')
+      }
+    },
+    created() {
+      if (this.posts && this.posts.length > 0) {
+        this.activePost = this.posts[0]
+      }
+    },
+    methods: {
+      activatePost(post) {
+        this.activePost = post
+      }
     },
     transition (to, from) {
       if (!from) { return 'slide-left' }
@@ -148,6 +153,13 @@
  &:hover {
    cursor: pointer;
  }
+}
+.headline {
+  word-break: break-word;
+}
+.is-active {
+  border: 1px solid #1976d2;
+  background-color: #212121;
 }
 .footer {
   margin-top: 15px;

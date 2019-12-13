@@ -7,7 +7,7 @@
       {{subtitle}}
     </v-card-subtitle>
     <v-card-text>
-      <p>Blog contents goes here...</p>
+      <p>{{content}}</p>
 
       <div class="text-left text-sm-right">
         <em><small>&mdash; John Leider,</small></em> {{date | formatDate}}
@@ -46,6 +46,10 @@
         required: true
       },
       subtitle: {
+        type: String,
+        required: false
+      },
+      content: {
         type: String,
         required: false
       },

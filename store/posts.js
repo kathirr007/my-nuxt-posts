@@ -1,4 +1,5 @@
 import { INITIAL_DATA } from './index'
+import Vue from 'vue'
 
 /* Fetch posts from server of from API */
 function fetchPostsAPI() {
@@ -35,6 +36,20 @@ export const getters = {
           commit('setPosts', posts)
         })
       // return INITIAL_DATA.posts
+    },
+    createPost({commit}, postData) {
+      // create post on server, or persist data in localstorage
+      postData._id = Math.random().toString(36).substr(2, 5)
+      postData.createdAt = new Date()
+      // debugger
+      commit('addPost', postData)
+      // commit('clearPost', postData)
+    },
+    updatePost({commit, state}, postData) {
+      const index = state.items.findIndex((post) => {
+        return post._id === postData._id
+      })
+      commit('updatePost', {post: postData, index})
     }
   }
 /* Actions ends */
@@ -44,6 +59,13 @@ export const getters = {
 export const mutations = {
   setPosts(state, posts) {
     state.items = posts
+  },
+  addPost(state, post) {
+    state.items.push(post)
+  },
+  updatePost(state, {post, index}) {
+    state.items[index] = post
+    Vue.set(state.items, index, post)
   }
 }
 /* Mutations ends */

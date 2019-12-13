@@ -18,6 +18,7 @@
         :key="post._id"
         :date="post.createdAt"
         :isRead="post.isRead"
+        :content="post.content"
       />
      </v-col>
     </v-row>
