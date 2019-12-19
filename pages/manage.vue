@@ -1,33 +1,35 @@
 <template>
   <div class="manage-page">
     <v-row>
-      <aside class="col" cols="12" md="2">
+      <v-col class="col" cols="12">
         <post-create />
-      </aside>
-      <v-col cols="12" :class="[activePost ? 'col-md-4' : 'col-md-10']" v-if="posts && posts.length > 0" transition="scale-transition">
-        <v-slide-y-transition group>
-          <v-hover v-for="post in posts" :key="post._id" v-slot:default="{ hover }">
-            <v-card :class="{'is-active': activePost && post._id === activePost._id}" color="" dark :elevation="hover ? 12 : 2" @click="activatePost(post)">
-              <v-card-title class="headline">{{post.title}}</v-card-title>
-              <v-card-subtitle class="font-italic">
-                {{post.subtitle}}
-              </v-card-subtitle>
-              <v-card-text>
-                <p>{{post.content}}</p>
-                <div class="text-right">
-                  <em><small>From John Leider</small></em>
-                </div>
-              </v-card-text>
-            </v-card>
-          </v-hover>
-        </v-slide-y-transition>
       </v-col>
+      <simplebar class="posts-list py-0" data-simplebar-auto-hide="false" :class="[activePost ? 'col-md-4' : 'col-md-10']" v-if="posts && posts.length > 0">
+        <v-col cols="12" class="py-0" transition="scale-transition">
+          <v-slide-y-transition group>
+            <v-hover v-for="post in posts" :key="post._id" v-slot:default="{ hover }">
+              <v-card :class="{'is-active': activePost && post._id === activePost._id}" color="" dark :elevation="hover ? 12 : 2" @click="activatePost(post)">
+                <v-card-title class="headline">{{post.title}}</v-card-title>
+                <v-card-subtitle class="font-italic">
+                  {{post.subtitle}}
+                </v-card-subtitle>
+                <v-card-text>
+                  <p>{{post.content}}</p>
+                  <div class="text-right">
+                    <em><small>From John Leider</small></em>
+                  </div>
+                </v-card-text>
+              </v-card>
+            </v-hover>
+          </v-slide-y-transition>
+        </v-col>
+      </simplebar>
       <v-col v-else cols="10" transition="scale-transition">
         <v-card dark class="no-hover pa-4">
           <h2 class="headline">There are no posts :(</h2>
         </v-card>
       </v-col>
-      <v-col v-if="activePost && posts.length > 0" cols="12" md="6" class="" id="message-preview" transition="scale-transition">
+      <v-col v-if="activePost && posts.length > 0" cols="12" md="8" class="py-0" id="message-preview" transition="scale-transition">
         <post-manage @deletePostSubmitted='deletePost' :postData="activePost" />
       </v-col>
     </v-row>
@@ -55,9 +57,11 @@
   import { mapState } from 'vuex'
   import PostCreate from '~/components/PostCreate'
   import PostManage from '~/components/PostManage'
+  import simplebar from 'simplebar-vue';
+  import 'simplebar/dist/simplebar.min.css';
   export default {
     components: {
-      PostCreate, PostManage
+      PostCreate, PostManage, simplebar
     },
     data() {
       return {
@@ -116,6 +120,14 @@
 </script>
 
 <style lang="scss" scoped>
+.posts-list {
+  height: calc(100vh - (56px + 60px + 100px + 24px));
+  overflow: hidden;
+  overflow-y: auto;
+  @media screen and(min-width: 960px){
+    height: calc(100vh - (64px + 60px + 76px + 24px));
+  }
+}
 .v-card {
   margin-bottom: 15px;
  &:last-child, &:only-child {
