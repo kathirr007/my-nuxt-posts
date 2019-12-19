@@ -97,9 +97,13 @@
       },
       deletePost(){
         if(this.activePost) {
+          const index = this.posts.findIndex((post) => {
+            return post._id === this.activePost._id
+          })
           this.$store.dispatch('posts/deletePost', this.activePost._id)
             .then(() => {
-              this.setInitialActivePost()
+              // this.setInitialActivePost()
+              this.activePost = this.posts[index - 1]
             })
         }
       }
