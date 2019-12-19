@@ -14,6 +14,7 @@ function fetchPostsAPI() {
 export const state = () => {
   return {
     items: [],
+    archivedItems: [],
   }
 }
 
@@ -29,6 +30,33 @@ export const getters = {
 /* Actions */
 /* Actions are very good place to send a request to a server. Usually Actions are the function resolve into some data */
   export const actions = {
+    getArchivedPosts({commit}) {
+      const archivedPosts = localStorage.getItem('archived_posts')
+      if(archivedPosts) {
+        commit('setArchivedPosts', JSON.parse(archivedPosts))
+        return archivedPosts
+      } else {
+        localStorage.setItem('archived_posts', JSON.stringify([]))
+        return []
+      }
+    },
+    toggleRead({state, commit, dispatch}, postId) {
+      if(state.archivedItems.includes(postId)) {
+        // remove post id
+        const index = state.archivedItems.findIndex(pId => pId === postId)
+        commit('removeArchivedPost', index)
+        dispatch('persistArchivedPosts')
+        return postId
+      } else {
+        // ad Post id
+        commit('addArchivedPost', postId)
+        dispatch('persistArchivedPosts')
+        return postId
+      }
+    },
+    persistArchivedPosts({state}) {
+      localStorage.setItem('archived_posts', JSON.stringify(state.archivedItems))
+    },
     fetchPosts({commit}) {
       console.log('Calling fetch posts')
       return this.$axios.$get('/api/posts')
@@ -81,6 +109,15 @@ export const getters = {
 /* Mutations */
 // Mutations are used to assign values to a state
 export const mutations = {
+  setArchivedPosts(state, archivedPosts) {
+    state.archivedItems = archivedPosts
+  },
+  addArchivedPost(state, postId) {
+    state.archivedItems.push(postId)
+  },
+  removeArchivedPost(state, index) {
+    state.archivedItems.splice(index, 1)
+  },
   setPosts(state, posts) {
     state.items = posts
   },

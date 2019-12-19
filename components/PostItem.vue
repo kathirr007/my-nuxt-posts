@@ -14,7 +14,7 @@
       </div>
     </v-card-text>
     <v-card-actions class="flex-column flex-sm-row">
-        <v-switch dense v-model="isReadChecked" color="primary" class="align-self-start mx-2 my-0" :label="readLabel()"></v-switch>
+        <v-switch @change="toggleRead" inset v-model="isArchived" color="primary" class="align-self-start mx-2 my-0" :label="readLabel()"></v-switch>
       <v-spacer />
       <v-btn dark nuxt to="/inspire" class="align-self-end align-self-sm-start">
         View indetails
@@ -26,21 +26,11 @@
 <script>
   import moment from 'moment'
   export default {
-    data() {
-      return {
-        moment,
-        isReadChecked: this.isRead ? true : false
-      }
-    },
-    methods:{
-      /* formatDate(date) {
-        return moment(date).format('LLL')
-      } */
-      readLabel() {
-        return this.isReadChecked ? 'Read' : 'UnRead'
-      }
-    },
     props: {
+      id: {
+        type: String,
+        required: true
+      },
       title: {
         type: String,
         required: true
@@ -60,6 +50,37 @@
       isRead: {
         type: Boolean,
         required: false
+      }
+    },
+    data() {
+      return {
+        moment,
+        isReadChecked: this.isArchived ? true : false
+      }
+    },
+    methods:{
+      /* formatDate(date) {
+        return moment(date).format('LLL')
+      } */
+      readLabel() {
+        return this.isArchived ? 'Read' : 'UnRead'
+      },
+      toggleRead() {
+        this.$store.dispatch('posts/toggleRead', this.id)
+      }
+    },
+    computed: {
+      archivedPosts() {
+        // debugger
+        return this.$store.state.posts.archivedItems
+      },
+      isArchived: {
+        get() {
+          return this.archivedPosts.includes(this.id)
+        },
+        set(val) {
+          this.archivedPosts.includes(this.id)
+        }
       }
     }
   }

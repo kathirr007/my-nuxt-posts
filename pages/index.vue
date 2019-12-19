@@ -20,6 +20,7 @@
           :date="post.createdAt"
           :isRead="post.isRead"
           :content="post.content"
+          :id="post._id"
         />
       </div>
       <div v-else transition="slide-y-transition">
@@ -90,16 +91,20 @@ export default {
       return store.dispatch('posts/fetchPosts')
     }
   },
-  /* mounted() {
-    this.$store.dispatch('posts/fetchPosts')
+  mounted() {
+    /* this.$store.dispatch('posts/fetchPosts')
       .then((posts) => {
         console.log(posts)
-      })
-  }, */
+      }) */
+    this.$store.dispatch('posts/getArchivedPosts')
+  },
   computed: {
     posts() {
       return this.$store.state.posts.items
     },
+    archievedPosts() {
+      return this.$store.state.posts.archievedItems
+    }
     /* isFormValid() {
       console.log('isFormValid has been called')
       if(this.form.firstname) {
