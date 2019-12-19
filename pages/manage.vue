@@ -4,7 +4,8 @@
       <v-col class="col" cols="12">
         <post-create />
       </v-col>
-      <simplebar class="posts-list py-0" data-simplebar-auto-hide="false" :class="[activePost ? 'col-md-4' : 'col-md-10']" v-if="posts && posts.length > 0">
+
+      <simplebar class="posts-list py-md-0  float-sm-left order-2 order-md-1" data-simplebar-auto-hide="false" :class="[activePost ? 'col-md-4' : 'col-md-10']" v-if="posts && posts.length > 0">
         <v-col cols="12" class="py-0" transition="scale-transition">
           <v-slide-y-transition group>
             <v-hover v-for="post in posts" :key="post._id" v-slot:default="{ hover }">
@@ -24,14 +25,15 @@
           </v-slide-y-transition>
         </v-col>
       </simplebar>
+      <v-col v-if="activePost && posts.length > 0" cols="12" md="8" class="py-md-0 order-1 order-md-2" id="message-preview" transition="scale-transition">
+        <post-manage @deletePostSubmitted='deletePost' :postData="activePost" />
+      </v-col>
       <v-col v-else cols="10" transition="scale-transition">
         <v-card dark class="no-hover pa-4">
           <h2 class="headline">There are no posts :(</h2>
         </v-card>
       </v-col>
-      <v-col v-if="activePost && posts.length > 0" cols="12" md="8" class="py-0" id="message-preview" transition="scale-transition">
-        <post-manage @deletePostSubmitted='deletePost' :postData="activePost" />
-      </v-col>
+
     </v-row>
     <footer class="footer">
       <v-divider />
@@ -121,10 +123,10 @@
 
 <style lang="scss" scoped>
 .posts-list {
-  height: calc(100vh - (56px + 60px + 100px + 24px));
-  overflow: hidden;
-  overflow-y: auto;
+  // height: calc(100vh - (56px + 60px + 100px + 24px));
   @media screen and(min-width: 960px){
+    overflow: hidden;
+    overflow-y: auto;
     height: calc(100vh - (64px + 60px + 76px + 24px));
   }
 }
