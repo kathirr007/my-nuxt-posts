@@ -17,20 +17,6 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="" dark @click="dialog = false">Close</v-btn>
-          <!-- <v-btn
-            class="ma-2"
-            :loading="loading"
-            :disabled="!valid"
-            color="info"
-            @click="loader"
-          >
-            Icon Loader
-            <template v-slot:loader>
-              <span class="custom-loader">
-                <v-icon light>mdi-cached</v-icon>
-              </span>
-            </template>
-          </v-btn> -->
           <v-btn color="" dark :loading="loading" :disabled="!valid" @click="createPostSubmitted">
             Create
             <template v-slot:loader>

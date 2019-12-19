@@ -58,6 +58,14 @@ module.exports = {
   */
   axios: {
   },
+
+  /*
+  Server Middleware
+  */
+  serverMiddleware: [
+    '~/server/endpoints/index'
+  ],
+
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module

@@ -1,33 +1,52 @@
 <template>
-  <v-form v-model="valid" ref="updatePostForm">
-    <v-row>
-      <v-col cols="12" class="form-group">
-        <v-text-field label="Title *" outlined v-model="post.title" :rules="rules.titleRules" required></v-text-field>
-      </v-col>
-      <v-col cols="12" class="form-group">
-        <v-text-field label="Sub Title *" outlined v-model="post.subtitle" :rules="rules.subtitleRules" required></v-text-field>
-      </v-col>
-      <v-col cols="12" class="form-group">
-        <v-textarea
-          class=""
-          label="Content *"
-          rows="1"
-          auto-grow
-          outlined
-          :rules="rules.contentRules"
-          v-model="post.content"
-        ></v-textarea>
-      </v-col>
-    </v-row>
-    <v-btn color="" class="float-right" dark :loading="loading" :disabled="!valid" @click="updatePost" type="button">
-            Update
-      <template v-slot:loader>
-        <span class="custom-loader">
-          <v-icon light>mdi-cached</v-icon>
-        </span>
-      </template>
-    </v-btn>
-  </v-form>
+  <v-card class="pa-3 no-hover">
+    <v-form v-model="valid" ref="updatePostForm">
+      <v-row>
+        <v-col cols="12">
+          <v-btn small class="float-right" dark color="error" @click="deletePost" type="button">
+            Delete
+            <template v-slot:loader>
+              <span class="custom-loader">
+                <v-icon light>mdi-cached</v-icon>
+              </span>
+            </template>
+          </v-btn>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12" class="form-group">
+          <v-text-field label="Title *" outlined v-model="post.title" :rules="rules.titleRules" required></v-text-field>
+        </v-col>
+        <v-col cols="12" class="form-group">
+          <v-text-field label="Sub Title *" outlined v-model="post.subtitle" :rules="rules.subtitleRules" required></v-text-field>
+        </v-col>
+        <v-col cols="12" class="form-group">
+          <v-textarea
+            class=""
+            label="Content *"
+            rows="1"
+            auto-grow
+            outlined
+            :rules="rules.contentRules"
+            v-model="post.content"
+          ></v-textarea>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-btn color="" class="float-right" dark :loading="loading" :disabled="!valid" @click="updatePost" type="button">
+                  Update
+            <template v-slot:loader>
+              <span class="custom-loader">
+                <v-icon light>mdi-cached</v-icon>
+              </span>
+            </template>
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-form>
+
+  </v-card>
 </template>
 
 <script>
@@ -94,6 +113,14 @@
         setTimeout(() => {
           this.loading = false
         },500)
+      },
+      deletePost() {
+        /* this.$store.dispatch('posts/deletePost', this.post._id)
+        this.loading = true
+        setTimeout(() => {
+          this.loading = false
+        },500) */
+        this.$emit('deletePostSubmitted')
       }
     },
   }
@@ -104,6 +131,13 @@
     padding-top: 0;
     &:last-child {
       padding-bottom: 0;
+    }
+  }
+  .v-card {
+    &.no-hover{
+      &:hover {
+        cursor: default;
+      }
     }
   }
 </style>

@@ -11,15 +11,20 @@
           Welcome to My Blog
         </h1>
       </div>
-      <post-item
-        v-for="post in posts"
-        :title="post.title"
-        :subtitle="post.subtitle"
-        :key="post._id"
-        :date="post.createdAt"
-        :isRead="post.isRead"
-        :content="post.content"
-      />
+      <div v-if="posts && posts.length > 0" transition="slide-y-transition" group>
+        <post-item
+          v-for="post in posts"
+          :title="post.title"
+          :subtitle="post.subtitle"
+          :key="post._id"
+          :date="post.createdAt"
+          :isRead="post.isRead"
+          :content="post.content"
+        />
+      </div>
+      <div v-else transition="slide-y-transition">
+        <h2 class="headline">There are no post :(</h2>
+      </div>
      </v-col>
     </v-row>
     <!-- <v-form v-model="form.valid">

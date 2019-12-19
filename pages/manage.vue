@@ -1,80 +1,34 @@
 <template>
   <div class="manage-page">
-    <!-- <nav class="navbar has-shadow">
-      <div class="container">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="../">
-          <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox">
-          </a>
-          <div class="navbar-burger burger"
-               aria-label="menu"
-               aria-expanded="false"
-               data-target="navMenu">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-        <div id="navMenu" class="navbar-menu">
-          <div class="navbar-end">
-            <div class="navbar-item has-dropdown">
-              <a class="navbar-link">
-              Menu
-              </a>
-              <div class="navbar-dropdown">
-                <a class="navbar-item">
-                Dashboard
-                </a>
-                <a class="navbar-item">
-                Profile
-                </a>
-                <a class="navbar-item">
-                Settings
-                </a>
-                <hr class="navbar-divider">
-                <div class="navbar-item">
-                  Logout
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav> -->
     <v-row>
       <aside class="col" cols="12" md="2">
         <post-create />
       </aside>
-      <v-col cols="12" md="4">
-        <v-hover v-for="post in posts" :key="post._id" v-slot:default="{ hover }">
-          <v-card :class="{'is-active': activePost && post._id === activePost._id}" color="" dark :elevation="hover ? 12 : 2" @click="activatePost(post)">
-            <v-card-title class="headline">{{post.title}}</v-card-title>
-            <v-card-subtitle class="font-italic">
-              {{post.subtitle}}
-            </v-card-subtitle>
-            <v-card-text>
-              <p>{{post.content}}</p>
-              <div class="text-right">
-                <em><small>From John Leider</small></em>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-hover>
-        <!-- <v-hover v-slot:default="{ hover }">
-          <v-card color="" dark :elevation="hover ? 12 : 2">
-            <v-card-title class="headline">Unlimited music now</v-card-title>
-            <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever, online and offline.
-            </v-card-subtitle>
-            <v-card-text>
-              <div class="text-right">
-                <em><small>From John Leider</small></em>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-hover> -->
+      <v-col cols="12" :class="[activePost ? 'col-md-4' : 'col-md-10']" v-if="posts && posts.length > 0" transition="scale-transition">
+        <v-slide-y-transition group>
+          <v-hover v-for="post in posts" :key="post._id" v-slot:default="{ hover }">
+            <v-card :class="{'is-active': activePost && post._id === activePost._id}" color="" dark :elevation="hover ? 12 : 2" @click="activatePost(post)">
+              <v-card-title class="headline">{{post.title}}</v-card-title>
+              <v-card-subtitle class="font-italic">
+                {{post.subtitle}}
+              </v-card-subtitle>
+              <v-card-text>
+                <p>{{post.content}}</p>
+                <div class="text-right">
+                  <em><small>From John Leider</small></em>
+                </div>
+              </v-card-text>
+            </v-card>
+          </v-hover>
+        </v-slide-y-transition>
       </v-col>
-      <v-col cols="12" md="6" class="" id="message-pane">
-        <post-manage :postData="activePost" />
+      <v-col v-else cols="10" transition="scale-transition">
+        <v-card dark class="no-hover pa-4">
+          <h2 class="headline">There are no posts :(</h2>
+        </v-card>
+      </v-col>
+      <v-col v-if="activePost && posts.length > 0" cols="12" md="6" class="" id="message-preview" transition="scale-transition">
+        <post-manage @deletePostSubmitted='deletePost' :postData="activePost" />
       </v-col>
     </v-row>
     <footer class="footer">
@@ -108,7 +62,7 @@
     data() {
       return {
         // posts: this.$store.state.posts,
-        activePost: {},
+        activePost: null,
       }
     },
     computed: {
@@ -128,13 +82,26 @@
       }
     },
     created() {
-      if (this.posts && this.posts.length > 0) {
-        this.activePost = this.posts[0]
-      }
+      this.setInitialActivePost()
     },
     methods: {
       activatePost(post) {
         this.activePost = post
+      },
+      setInitialActivePost() {
+        if (this.posts && this.posts.length > 0) {
+          this.activePost = this.posts[0]
+        } else {
+          this.activePost = null
+        }
+      },
+      deletePost(){
+        if(this.activePost) {
+          this.$store.dispatch('posts/deletePost', this.activePost._id)
+            .then(() => {
+              this.setInitialActivePost()
+            })
+        }
       }
     },
     transition (to, from) {
@@ -152,6 +119,11 @@
  }
  &:hover {
    cursor: pointer;
+ }
+ &.no-hover {
+   &:hover {
+     cursor: default;
+   }
  }
 }
 .headline {

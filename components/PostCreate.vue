@@ -3,10 +3,10 @@
     <v-form v-model="form.valid" ref="createPostForm">
       <v-row>
         <v-col cols="12" class="form-group">
-          <v-text-field label="Title *" outlined v-model="form.title" :rules="form.titleRules" required></v-text-field>
+          <v-text-field label="Title *" outlined v-model="form.postData.title" :rules="form.titleRules" required></v-text-field>
         </v-col>
         <v-col cols="12" class="form-group">
-          <v-text-field label="Sub Title *" outlined v-model="form.subtitle" :rules="form.subtitleRules" required></v-text-field>
+          <v-text-field label="Sub Title *" outlined v-model="form.postData.subtitle" :rules="form.subtitleRules" required></v-text-field>
         </v-col>
         <v-col cols="12" class="form-group">
           <v-textarea
@@ -16,7 +16,7 @@
             auto-grow
             outlined
             :rules="form.contentRules"
-            v-model="form.content"
+            v-model="form.postData.content"
           ></v-textarea>
         </v-col>
       </v-row>
@@ -33,9 +33,11 @@
         form: {
           valid: false,
           loading: false,
-          title: '',
-          subtitle: '',
-          content: '',
+          postData: {
+            title: '',
+            subtitle: '',
+            content: '',
+          },
           titleRules: [
             v => !!v || 'Title is required',
             v => v.length <= 100 || 'Name must be less than 100 characters',
@@ -53,15 +55,17 @@
     },
     methods: {
       createPost(values) {
-        // console.log(this.form)
-        this.$store.dispatch('posts/createPost', {...this.form})
+        console.log(this.form.postData)
+        // const postData = {...this.form.title}
+        this.$store.dispatch('posts/createPost', {...this.form.postData})
+        // debugger
         this.resetForm()
         this.$refs.createPostForm.resetValidation()
       },
       resetForm() {
-        this.form.title = ''
-        this.form.subtitle = ''
-        this.form.content = ''
+        this.form.postData.title = ''
+        this.form.postData.subtitle = ''
+        this.form.postData.content = ''
       }
     },
     components: {
