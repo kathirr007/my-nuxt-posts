@@ -3,9 +3,9 @@
     <!-- <v-btn dark nuxt @click.stop to="/inspire">
       Create
     </v-btn> -->
-    <v-dialog v-model="dialog" persistent max-width="75%">
+    <v-dialog v-model="dialog" persistent>
       <template v-slot:activator="{ on }">
-        <v-btn dark v-on="on" @click="loading = false">Create</v-btn>
+        <v-btn dark v-on="on" @click="loading = false">Create new Post</v-btn>
       </template>
       <v-card>
         <v-card-title>
@@ -106,6 +106,16 @@
     }
     to {
       transform: rotate(360deg);
+    }
+  }
+</style>
+<style lang="scss">
+.v-dialog {
+    &--active {
+      // max-width: 95%;
+      @media screen and(min-width: 960px){
+        max-width: 75%;
+      }
     }
   }
 </style>
