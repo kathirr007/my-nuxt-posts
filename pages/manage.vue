@@ -94,7 +94,7 @@
     methods: {
       activatePost(post) {
         this.activePost = post
-        goTo('.v-content__wrap', {
+        goTo('.v-content', {
           duration: 300,
           offset: 0,
           easing: 'easeInOutCubic'
