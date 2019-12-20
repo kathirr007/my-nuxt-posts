@@ -2,7 +2,8 @@ const colors = require('vuetify/es5/util/colors').default
 
 module.exports = {
   server: {
-    port: 3100, // default 3000
+    // port: 3100, // default 3000
+    port: process.env.PORT || 3100
   },
   mode: 'universal',
   /*

@@ -25,9 +25,7 @@ async function start () {
   app.use(nuxt.render)
 
   // Listen the server
-  app.listen(process.env.PORT || 3100, function(){
-    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-  });
+  app.listen(port, host);
   // app.listen(port, host)
   consola.ready({
     message: `Server listening on http://${host}:${port}`,
