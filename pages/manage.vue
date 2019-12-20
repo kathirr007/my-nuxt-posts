@@ -5,11 +5,11 @@
         <post-create />
       </v-col>
 
-      <simplebar class="posts-list py-md-0  float-sm-left order-2 order-md-1" data-simplebar-auto-hide="false" :class="[activePost ? 'col-md-4' : 'col-md-10']" v-if="posts && posts.length > 0">
+      <simplebar class="posts-list py-md-0  float-sm-left order-2 order-md-1" :class="[activePost ? 'col-md-4' : 'col-md-10']" v-if="posts && posts.length > 0">
         <v-col cols="12" class="py-0" transition="scale-transition">
           <v-slide-y-transition group>
             <v-hover v-for="post in posts" :key="post._id" v-slot:default="{ hover }">
-              <v-card :class="{'is-active': activePost && post._id === activePost._id}" color="" dark :elevation="hover ? 12 : 2" @click="activatePost(post)">
+              <v-card :class="{'is-active': activePost && post._id === activePost._id}" color="" dark :elevation="hover ? 12 : 2" @click.native="activatePost(post)">
                 <v-card-title class="headline">{{post.title}}</v-card-title>
                 <v-card-subtitle class="font-italic">
                   {{post.subtitle}}
