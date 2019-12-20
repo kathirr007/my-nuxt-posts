@@ -153,14 +153,21 @@
 .headline {
   word-break: break-word;
 }
-.is-active {
-  border: 1px solid #1976d2;
-  background-color: #212121;
-}
+
 .footer {
   margin-top: 15px;
   .v-divider {
     background-color: #fff;
+  }
+}
+</style>
+<style lang="scss">
+.theme--dark {
+  &.v-card {
+    &.is-active {
+      border: 1px solid #1976d2;
+      background-color: #212121;
+    }
   }
 }
 </style>
