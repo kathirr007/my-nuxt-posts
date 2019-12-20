@@ -61,6 +61,7 @@
   import PostManage from '~/components/PostManage'
   import simplebar from 'simplebar-vue';
   import 'simplebar/dist/simplebar.min.css';
+  import goTo from 'vuetify/es5/services/goto'
   export default {
     components: {
       PostCreate, PostManage, simplebar
@@ -93,6 +94,11 @@
     methods: {
       activatePost(post) {
         this.activePost = post
+        goTo('.v-content__wrap', {
+          duration: 300,
+          offset: 0,
+          easing: 'easeInOutCubic'
+        })
       },
       setInitialActivePost() {
         if (this.posts && this.posts.length > 0) {
