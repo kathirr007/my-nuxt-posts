@@ -52,14 +52,33 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    // proxy module
+    '@nuxtjs/proxy',
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: process.env.BASE_URL || 'http://localhost:3100'
+    // baseURL: process.env.BASE_URL || 'http://localhost:3100',
+    proxy: true
   },
+
+  /*
+  ** Proxy settings
+  */
+ proxy: {
+  // '/missions?': 'http://contentplace.x1.fr/missions?',
+  // 'http://localhost:3100/missions?': 'http://contentplace.x1.fr',
+  '/missions': {
+    target: 'http://contentplace.x1.fr/missions?client_secret=%242y%2410%24r1u8S82qpoLo.ASFBnUQCe6MGJhOyuGYderz5fA64asogQ3LFpJIi&mission_status=draft',
+    pathRewrite: {'^/missions': ''}
+  },
+  '/api/': {
+    target: 'http://contentplace.x1.fr/missions?mission_status=&client_secret=%242y%2410%24r1u8S82qpoLo.ASFBnUQCe6MGJhOyuGYderz5fA64asogQ3LFpJIi',
+    pathRewrite: {'^/api/': ''}
+  }
+ },
 
   /*
   Server Middleware
