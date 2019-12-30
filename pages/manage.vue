@@ -124,8 +124,7 @@
           }
         )
         .then((response) => {
-            console.log(response.data);
-            console.log(response.headers);
+            console.log(response);
           },
           (error) => {
             console.log(error)

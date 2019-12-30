@@ -70,13 +70,13 @@ module.exports = {
  proxy: {
   // '/missions?': 'http://contentplace.x1.fr/missions?',
   // 'http://localhost:3100/missions?': 'http://contentplace.x1.fr',
-  '/missions/mision_status=draft': {
+  '/missions': {
     target: 'http://contentplace.x1.fr/missions?client_secret=%242y%2410%24r1u8S82qpoLo.ASFBnUQCe6MGJhOyuGYderz5fA64asogQ3LFpJIi&mission_status=draft',
     pathRewrite: {'^/missions': ''}
   },
-  '/missions/': {
+  '/api/': {
     target: 'http://contentplace.x1.fr/missions?mission_status=&client_secret=%242y%2410%24r1u8S82qpoLo.ASFBnUQCe6MGJhOyuGYderz5fA64asogQ3LFpJIi',
-    pathRewrite: {'^/missions/': ''}
+    pathRewrite: {'^/api/': ''}
   }
  },
 
