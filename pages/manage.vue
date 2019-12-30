@@ -41,13 +41,21 @@
           <v-col cols="12">
             <strong>Blog Created </strong> by <a href="https://github.com/kathirr007">kathirr007</a>. The source
             code is available at
-            <v-tooltip bottom tag="span">
+            <v-tooltip top tag="span">
               <template v-slot:activator="{ on }">
                 <v-btn icon dark v-on="on" class="mr-2" href="https://github.com/kathirr007/my-nuxt-posts" target="_blank">
                   <v-icon>mdi-github-circle</v-icon>
                 </v-btn>
               </template>
               <span>View on Github</span>
+            </v-tooltip>
+            <v-tooltip top tag="span">
+              <template v-slot:activator="{ on }">
+                <v-btn  dark v-on="on" class="mr-2" @click.stop="testAxios">
+                  Test axios headers
+                </v-btn>
+              </template>
+              <span>Test Axios request</span>
             </v-tooltip>
           </v-col>
       </v-container>
@@ -62,7 +70,16 @@
   import simplebar from 'simplebar-vue';
   import 'simplebar/dist/simplebar.min.css';
   import goTo from 'vuetify/es5/services/goto'
+  import axios from 'axios'
   export default {
+    async testAxios ({ $axios }) {
+        let { data } = await $axios.$get(
+          '/missions?mission_status=draft&client_secret=%242y%2410%24r1u8S82qpoLo.ASFBnUQCe6MGJhOyuGYderz5fA64asogQ3LFpJIi')
+        console.log(data)
+        return {
+          prices: data.data
+        }
+      },
     components: {
       PostCreate, PostManage, simplebar
     },
@@ -92,6 +109,45 @@
       this.setInitialActivePost()
     },
     methods: {
+      async testAxios () {
+        const data = await axios.get('/missions', {
+          /* params: {
+            mission_status: 'draft',
+            // source_content_type: 'application/json',
+            client_secret: '%242y%2410%24r1u8S82qpoLo.ASFBnUQCe6MGJhOyuGYderz5fA64asogQ3LFpJIi'
+          } */
+        })
+        .then((response) =>{
+          console.log(response)
+        })
+      },
+      /* testAxios(){
+        let webApiUrl = '/missions';
+        this.$axios.$get(
+          webApiUrl,
+          {
+            headers: {
+              // "Authorization" : `Bearer ${client_secret}`
+              // "Cache-Control": "no-cache",
+              "content-type": "application/vnd.api+json"
+            },
+            params: {
+                mission_status: 'draft',
+                // source_content_type: 'application/json',
+                client_secret: '%242y%2410%24r1u8S82qpoLo.ASFBnUQCe6MGJhOyuGYderz5fA64asogQ3LFpJIi'
+            }
+          }
+        )
+        .then((response) => {
+            console.log(response.data);
+            console.log(response.headers);
+          },
+          (error) => {
+            console.log(error)
+            var status = error.response.status
+          }
+        );
+      }, */
       activatePost(post) {
         this.activePost = post
         goTo('.v-content', {
