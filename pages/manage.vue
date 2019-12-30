@@ -109,33 +109,18 @@
       this.setInitialActivePost()
     },
     methods: {
-      async testAxios () {
-        const data = await axios.get('/missions', {
-          /* params: {
-            mission_status: 'draft',
-            // source_content_type: 'application/json',
-            client_secret: '%242y%2410%24r1u8S82qpoLo.ASFBnUQCe6MGJhOyuGYderz5fA64asogQ3LFpJIi'
-          } */
-        })
+      /* async testAxios () {
+        const data = await axios.get('/missions', {})
         .then((response) =>{
           console.log(response)
         })
-      },
-      /* testAxios(){
+      }, */
+      testAxios(){
         let webApiUrl = '/missions';
         this.$axios.$get(
           webApiUrl,
           {
-            headers: {
-              // "Authorization" : `Bearer ${client_secret}`
-              // "Cache-Control": "no-cache",
-              "content-type": "application/vnd.api+json"
-            },
-            params: {
-                mission_status: 'draft',
-                // source_content_type: 'application/json',
-                client_secret: '%242y%2410%24r1u8S82qpoLo.ASFBnUQCe6MGJhOyuGYderz5fA64asogQ3LFpJIi'
-            }
+
           }
         )
         .then((response) => {
@@ -147,7 +132,7 @@
             var status = error.response.status
           }
         );
-      }, */
+      },
       activatePost(post) {
         this.activePost = post
         goTo('.v-content', {
