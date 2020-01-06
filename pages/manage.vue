@@ -116,7 +116,8 @@
         })
       }, */
       testAxios(){
-        let webApiUrl = '/missions';
+        // let webApiUrl = 'http://contentplace.x1.fr/missions?client_secret=%242y%2410%24r1u8S82qpoLo.ASFBnUQCe6MGJhOyuGYderz5fA64asogQ3LFpJIi&mission_status=draft';
+        let webApiUrl = 'http://contentplace.x1.fr/missions?mission_status=draft&client_secret=$2y$10$r1u8S82qpoLo.ASFBnUQCe6MGJhOyuGYderz5fA64asogQ3LFpJIi';
         this.$axios.$get(
           webApiUrl,
           {
