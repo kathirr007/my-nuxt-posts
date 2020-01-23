@@ -41,6 +41,15 @@ export const getters = {
         return []
       }
     },
+    postRead({state, commit, dispatch}, postId) {
+      if(!(state.archivedItems.includes(postId))) {
+        // commit('addArchivedPost', postId)
+        // dispatch('persistArchivedPosts')
+        commit('addArchivedPost', postId)
+        dispatch('persistArchivedPosts')
+        return postId
+      }
+    },
     toggleRead({state, commit, dispatch}, postId) {
       if(state.archivedItems.includes(postId)) {
         // remove post id
