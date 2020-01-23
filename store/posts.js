@@ -14,6 +14,7 @@ function fetchPostsAPI() {
 export const state = () => {
   return {
     items: [],
+    item: {},
     archivedItems: [],
   }
 }
@@ -62,8 +63,18 @@ export const getters = {
       return this.$axios.$get('/api/posts')
         .then((posts) => {
           commit('setPosts', posts)
+          return posts
         })
-      // return INITIAL_DATA.posts
+        // return INITIAL_DATA.posts
+    },
+    fetchPostById({commit}, postId) {
+      return this.$axios.$get('/api/posts')
+        .then((posts) => {
+          const selectedPost = posts.find((p) => p._id === postId)
+          commit('setPost', selectedPost)
+          // console.log(selectedPost)
+          return selectedPost
+        })
     },
     createPost({commit}, postData) {
       // create post on server, or persist data in localstorage
@@ -120,6 +131,9 @@ export const mutations = {
   },
   setPosts(state, posts) {
     state.items = posts
+  },
+  setPost(state, post) {
+    state.item = post
   },
   addPost(state, post) {
     state.items.push(post)

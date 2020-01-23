@@ -19,6 +19,10 @@
             v-model="form.postData.content"
           ></v-textarea>
         </v-col>
+        <v-col v-if="form.postData.content" cols="12" class="form-group mb-2 content-preview">
+          <h2 class="title mb-2">Content Preview</h2>
+          <div v-html="compiledMarkdown"></div>
+        </v-col>
       </v-row>
       <small>*indicates required field</small>
     </v-form>
@@ -27,6 +31,7 @@
 
 <script>
   import Modal from '~/components/shared/Modal'
+  import DOMPurify from 'dompurify'
   export default {
     data() {
       return {
@@ -53,6 +58,14 @@
         }
       }
     },
+    computed: {
+      compiledMarkdown() {
+        if (process.client) {
+          return DOMPurify.sanitize(marked(this.form.postData.content))
+        }
+        return ''
+      }
+    },
     methods: {
       createPost(values) {
         console.log(this.form.postData)
@@ -66,7 +79,7 @@
         this.form.postData.title = ''
         this.form.postData.subtitle = ''
         this.form.postData.content = ''
-      }
+      },
     },
     components: {
       Modal
@@ -80,5 +93,8 @@
     &:last-child {
       padding-bottom: 0;
     }
+  }
+  .content-preview{
+    color: #fff;
   }
 </style>

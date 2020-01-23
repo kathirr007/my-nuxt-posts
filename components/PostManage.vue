@@ -31,6 +31,10 @@
             v-model="post.content"
           ></v-textarea>
         </v-col>
+        <v-col cols="12" class="form-group mb-2 content-preview">
+          <h2 class="title mb-2">Content Preview</h2>
+          <div v-html="compiledMarkdown"></div>
+        </v-col>
       </v-row>
       <v-row>
         <v-col cols="12">
@@ -50,6 +54,7 @@
 </template>
 
 <script>
+  import DOMPurify from 'dompurify'
   export default {
     /* props: {
       postData: {
@@ -104,7 +109,14 @@
           ],
           valid: false,
         }
-      }
+      },
+      compiledMarkdown() {
+        if (process.client) {
+          // return marked(this.post.content, {sanitize: true})
+          return DOMPurify.sanitize(marked(this.post.content))
+        }
+        return ''
+      },
     },
     methods: {
       updatePost() {
