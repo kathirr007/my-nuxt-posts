@@ -16,6 +16,9 @@
                     <div v-html="compiledMarkdown"></div>
                   </div>
                 </div>
+                <div class="text-left text-sm-right">
+                  <em><small>&mdash; John Leider,</small></em> {{post.createdAt | formatDate}}
+                </div>
               </div>
               <!-- end of post -->
             </div>

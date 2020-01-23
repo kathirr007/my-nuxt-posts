@@ -17,7 +17,7 @@
         <v-switch @change="toggleRead" inset v-model="isArchived" color="primary" class="align-self-start mx-2 my-0" :label="readLabel()"></v-switch>
       <v-spacer />
       <v-btn dark nuxt @click="postRead" :to="`/posts/${id}`" class="align-self-end align-self-sm-start">
-        View indetails
+        View details
       </v-btn>
     </v-card-actions>
   </v-card>
