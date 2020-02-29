@@ -35,7 +35,7 @@
   export default {
     fetch({params, store}) {
       const id = params.id
-      console.log(id)
+      // console.log(id)
       return store.dispatch('posts/fetchPostById', params.id)
     },
     computed: {

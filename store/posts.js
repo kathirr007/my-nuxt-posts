@@ -92,7 +92,7 @@ export const getters = {
         .then((posts) => {
           const selectedPost = posts.find((p) => p._id === postId)
           commit('setPost', selectedPost)
-          console.log(selectedPost)
+          // console.log(selectedPost)
           return selectedPost
         })
     },
