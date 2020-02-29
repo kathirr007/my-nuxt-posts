@@ -19,6 +19,9 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      {src: 'https://cdn.jsdelivr.net/npm/marked/marked.min.js'}
     ]
   },
   /*
@@ -30,7 +33,8 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    '~/assets/main.css'
+    '~/assets/main.css',
+    '~/assets/scss/main.scss'
   ],
   /*
   ** Plugins to load before mounting the App

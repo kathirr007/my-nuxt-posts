@@ -24,12 +24,15 @@
           <v-textarea
             class=""
             label="Content *"
-            rows="1"
-            auto-grow
+            rows="10"
             outlined
             :rules="rules.contentRules"
             v-model="post.content"
           ></v-textarea>
+        </v-col>
+        <v-col cols="12" class="form-group">
+          <label for="" class="title">Content Preview</label>
+          <div v-html="compiledMarkdown"></div>
         </v-col>
       </v-row>
       <v-row>
@@ -104,6 +107,14 @@
           ],
           valid: false,
         }
+      },
+      compiledMarkdown() {
+        if (process.client) {
+          return marked(this.post.content, {
+            sanitize: true
+          })
+        }
+        return ''
       }
     },
     methods: {

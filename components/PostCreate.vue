@@ -19,6 +19,10 @@
             v-model="form.postData.content"
           ></v-textarea>
         </v-col>
+        <v-col cols="12" class="form-group">
+          <label for="" class="title">Content Preview</label>
+          <div v-html="compiledMarkdown"></div>
+        </v-col>
       </v-row>
       <small>*indicates required field</small>
     </v-form>
@@ -53,6 +57,14 @@
         }
       }
     },
+    computed: {
+      compiledMarkdown() {
+        if (process.client) {
+          return marked(this.form.postData.content, {sanitize: true})
+        }
+        return ''
+      }
+    },
     methods: {
       createPost(values) {
         console.log(this.form.postData)
@@ -66,7 +78,7 @@
         this.form.postData.title = ''
         this.form.postData.subtitle = ''
         this.form.postData.content = ''
-      }
+      },
     },
     components: {
       Modal

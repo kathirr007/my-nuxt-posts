@@ -16,7 +16,7 @@
     <v-card-actions class="flex-column flex-sm-row">
         <v-switch @change="toggleRead" inset v-model="isArchived" color="primary" class="align-self-start mx-2 my-0" :label="readLabel()"></v-switch>
       <v-spacer />
-      <v-btn dark nuxt to="/inspire" class="align-self-end align-self-sm-start">
+      <v-btn dark @click="checkRead" nuxt :to="`/posts/${id}`" class="align-self-end align-self-sm-start">
         View indetails
       </v-btn>
     </v-card-actions>
@@ -67,6 +67,10 @@
       },
       toggleRead() {
         this.$store.dispatch('posts/toggleRead', this.id)
+      },
+      checkRead() {
+        // this.$store.commit('posts/addArchivedPost', this.id)
+        this.$store.dispatch('posts/checkRead', this.id)
       }
     },
     computed: {
