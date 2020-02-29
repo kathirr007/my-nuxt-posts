@@ -37,16 +37,14 @@
       "subtitle": "subtitle for Title 05",
       "content": "contents for Title 05 contents for Title 05 contents for Title 05 contents for Title 05 contents for Title 05 contents for Title 05 ",
       "_id": "v6bxj",
-      "createdAt": 1576812465142,
-      "isRead": false
+      "createdAt": 1576812465142
     },
     {
-      "title": "Blog post 06 Title",
-      "subtitle": "Blog post 06 SubTitle",
-      "content": "Blog post 06 Title Content goes here. Blog post 06 Title Content goes here. Blog post 06 Title Content goes here. Blog post 06 Title Content goes here. Blog post 06 Title Content goes here. Blog post 06 Title Content goes here. Blog post 06 Title Content goes here. Blog post 06 Title Content goes here. Blog post 06 Title Content goes here. Blog post 06 Title Content goes here. ",
-      "_id": "o606a",
-      "createdAt": 1582997524848,
-      "isRead": false
+      "title": "Alerts",
+      "subtitle": "v-alert",
+      "content": "The v-alert component is used to convey important information to the user through the use contextual types icons and color. These default types come in in 4 variations: success, info, warning, and error. Default icons are assigned which help represent different actions each type portrays. Many parts of an alert such as border, icon, and color can also be customized to fit almost any situation.",
+      "_id": "7isdg",
+      "createdAt": 1579774343458
     }
   ]
 }

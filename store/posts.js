@@ -41,6 +41,15 @@ export const getters = {
         return []
       }
     },
+    postRead({state, commit, dispatch}, postId) {
+      if(!(state.archivedItems.includes(postId))) {
+        // commit('addArchivedPost', postId)
+        // dispatch('persistArchivedPosts')
+        commit('addArchivedPost', postId)
+        dispatch('persistArchivedPosts')
+        return postId
+      }
+    },
     toggleRead({state, commit, dispatch}, postId) {
       if(state.archivedItems.includes(postId)) {
         // remove post id
@@ -76,17 +85,16 @@ export const getters = {
           commit('setPosts', posts)
           return posts
         })
-      // return INITIAL_DATA.posts
+        // return INITIAL_DATA.posts
     },
     fetchPostById({commit}, postId) {
-      console.log('Calling fetch posts')
       return this.$axios.$get('/api/posts')
-      .then((posts) => {
+        .then((posts) => {
           const selectedPost = posts.find((p) => p._id === postId)
           commit('setPost', selectedPost)
+          console.log(selectedPost)
           return selectedPost
         })
-      // return INITIAL_DATA.posts
     },
     createPost({commit}, postData) {
       // create post on server, or persist data in localstorage

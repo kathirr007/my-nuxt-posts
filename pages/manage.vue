@@ -25,14 +25,18 @@
           </v-slide-y-transition>
         </v-col>
       </simplebar>
-      <v-col v-if="activePost && posts.length > 0" cols="12" md="8" class="py-md-0 order-1 order-md-2" id="message-preview" transition="scale-transition">
-        <post-manage @deletePostSubmitted='deletePost' :postData="activePost" />
-      </v-col>
-      <v-col v-else cols="10" transition="scale-transition">
+      <simplebar v-if="activePost && posts.length > 0" cols="12" md="8" class="col col-12 col-md-8 py-md-0 order-1 order-md-2 post-manage pa-5" id="message-preview" transition="scale-transition">
+        <transition name="fade" mode="out-in">
+          <post-manage @deletePostSubmitted='deletePost' :postData="activePost" />
+        </transition>
+      </simplebar>
+      <simplebar v-else cols="10" transition="scale-transition" class="post-manage col col-10">
         <v-card dark class="no-hover pa-4">
           <h2 class="headline">There are no posts :(</h2>
         </v-card>
-      </v-col>
+      </simplebar>
+      <!-- <simplebar class="post-manage">
+      </simplebar> -->
 
     </v-row>
     <footer class="footer">
@@ -116,7 +120,8 @@
         })
       }, */
       testAxios(){
-        let webApiUrl = '/missions';
+        // let webApiUrl = 'http://contentplace.x1.fr/missions?client_secret=%242y%2410%24r1u8S82qpoLo.ASFBnUQCe6MGJhOyuGYderz5fA64asogQ3LFpJIi&mission_status=draft';
+        let webApiUrl = 'http://contentplace.x1.fr/missions?mission_status=draft&client_secret=$2y$10$r1u8S82qpoLo.ASFBnUQCe6MGJhOyuGYderz5fA64asogQ3LFpJIi';
         this.$axios.$get(
           webApiUrl,
           {
@@ -168,7 +173,7 @@
 </script>
 
 <style lang="scss" scoped>
-.posts-list {
+.posts-list, .post-manage {
   // height: calc(100vh - (56px + 60px + 100px + 24px));
   @media screen and(min-width: 960px){
     overflow: hidden;
