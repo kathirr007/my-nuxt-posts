@@ -2,7 +2,7 @@
   "posts": [
     {
       "_id": "1",
-      "title": "First Post Title Updated 02",
+      "title": "Title of the first post Updated 03",
       "subtitle": "First Post Subtitle Updated!",
       "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque veniam atque aliquam dolore animi delectus distinctio. Iure aliquid, quae qui impedit sit voluptatibus corrupti modi reprehenderit vel quas? Quam, est. This is updated to check toggle read.",
       "createdAt": 1576752997551,
@@ -33,18 +33,19 @@
       "isRead": false
     },
     {
-      "title": "Title 05 Updated",
-      "subtitle": "subtitle for Title 05",
-      "content": "contents for Title 05 contents for Title 05 contents for Title 05 contents for Title 05 contents for Title 05 contents for Title 05 ",
-      "_id": "v6bxj",
-      "createdAt": 1576812465142
-    },
-    {
-      "title": "Alerts",
+      "title": "Alerts Updated",
       "subtitle": "v-alert",
       "content": "The v-alert component is used to convey important information to the user through the use contextual types icons and color. These default types come in in 4 variations: success, info, warning, and error. Default icons are assigned which help represent different actions each type portrays. Many parts of an alert such as border, icon, and color can also be customized to fit almost any situation.",
       "_id": "7isdg",
       "createdAt": 1579774343458
+    },
+    {
+      "title": "Avatars",
+      "subtitle": "The v-avatar component is typically used to display circular user profile pictures.",
+      "content": "The `v-avatar` component is typically used to display circular user profile pictures. This component will allow you to dynamically size and add a border radius of responsive images, icons, and text. A tile variation is available for displaying an avatar without border radius.",
+      "_id": "n8lxl",
+      "createdAt": 1583053370932,
+      "isRead": false
     }
   ]
 }

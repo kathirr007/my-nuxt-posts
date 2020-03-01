@@ -53,7 +53,7 @@
           ],
           contentRules: [
             v => !!v || 'Content is required',
-            v => v.length >= 100 || 'Content more be less than 100 characters',
+            v => v.length >= 100 || 'Content Should be more than 100 characters',
           ],
         }
       }

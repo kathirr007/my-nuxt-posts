@@ -38,7 +38,7 @@
         </v-row>
         <v-row>
           <v-col cols="12">
-            <v-btn color="" class="float-right" dark :loading="loading" :disabled="!valid" @click="updatePost" type="button">
+            <v-btn color="" class="float-right" dark :loading="loading" :disabled="!(!checkChanges && valid)" @click="updatePost" type="button">
                     Update
               <template v-slot:loader>
                 <span class="custom-loader">
@@ -83,7 +83,6 @@
     },
     watch: {
       postData(data, oldValue) {
-        // debugger
         this.post = {...data}
       },
       loader () {
@@ -122,6 +121,10 @@
           return DOMPurify.sanitize(marked(this.post.content))
         }
         return ''
+      },
+      checkChanges() {
+        return JSON.stringify(this.postData) === JSON.stringify(this.post) ? true : false
+        // this.simpleComparision()
       },
     },
     methods: {
