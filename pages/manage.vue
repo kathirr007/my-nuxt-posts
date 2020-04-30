@@ -25,14 +25,18 @@
           </v-slide-y-transition>
         </v-col>
       </simplebar>
-      <v-col v-if="activePost && posts.length > 0" cols="12" md="8" class="py-md-0 order-1 order-md-2" id="message-preview" transition="scale-transition">
-        <post-manage @deletePostSubmitted='deletePost' :postData="activePost" />
-      </v-col>
-      <v-col v-else cols="10" transition="scale-transition">
+      <simplebar v-if="activePost && posts.length > 0" cols="12" md="8" class="col col-12 col-md-8 py-md-0 order-1 order-md-2 post-manage pa-5" id="message-preview" transition="scale-transition">
+        <transition name="fade" mode="out-in">
+          <post-manage @deletePostSubmitted='deletePost' :postData="activePost" />
+        </transition>
+      </simplebar>
+      <simplebar v-else cols="10" transition="scale-transition" class="post-manage col col-10">
         <v-card dark class="no-hover pa-4">
           <h2 class="headline">There are no posts :(</h2>
         </v-card>
-      </v-col>
+      </simplebar>
+      <!-- <simplebar class="post-manage">
+      </simplebar> -->
 
     </v-row>
     <footer class="footer">
@@ -49,14 +53,6 @@
               </template>
               <span>View on Github</span>
             </v-tooltip>
-            <v-tooltip top tag="span">
-              <template v-slot:activator="{ on }">
-                <v-btn  dark v-on="on" class="mr-2" @click.stop="testAxios">
-                  Test axios headers
-                </v-btn>
-              </template>
-              <span>Test Axios request</span>
-            </v-tooltip>
           </v-col>
       </v-container>
     </footer>
@@ -72,14 +68,6 @@
   import goTo from 'vuetify/es5/services/goto'
   import axios from 'axios'
   export default {
-    async testAxios ({ $axios }) {
-        let { data } = await $axios.$get(
-          '/missions?mission_status=draft&client_secret=%242y%2410%24r1u8S82qpoLo.ASFBnUQCe6MGJhOyuGYderz5fA64asogQ3LFpJIi')
-        console.log(data)
-        return {
-          prices: data.data
-        }
-      },
     components: {
       PostCreate, PostManage, simplebar
     },
@@ -115,23 +103,6 @@
           console.log(response)
         })
       }, */
-      testAxios(){
-        let webApiUrl = '/missions';
-        this.$axios.$get(
-          webApiUrl,
-          {
-
-          }
-        )
-        .then((response) => {
-            console.log(response);
-          },
-          (error) => {
-            console.log(error)
-            var status = error.response.status
-          }
-        );
-      },
       activatePost(post) {
         this.activePost = post
         goTo('.v-content', {
@@ -168,7 +139,7 @@
 </script>
 
 <style lang="scss" scoped>
-.posts-list {
+.posts-list, .post-manage {
   // height: calc(100vh - (56px + 60px + 100px + 24px));
   @media screen and(min-width: 960px){
     overflow: hidden;

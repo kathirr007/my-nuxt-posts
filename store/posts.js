@@ -14,6 +14,7 @@ function fetchPostsAPI() {
 export const state = () => {
   return {
     items: [],
+    item: {},
     archivedItems: [],
   }
 }
@@ -40,6 +41,15 @@ export const getters = {
         return []
       }
     },
+    postRead({state, commit, dispatch}, postId) {
+      if(!(state.archivedItems.includes(postId))) {
+        // commit('addArchivedPost', postId)
+        // dispatch('persistArchivedPosts')
+        commit('addArchivedPost', postId)
+        dispatch('persistArchivedPosts')
+        return postId
+      }
+    },
     toggleRead({state, commit, dispatch}, postId) {
       if(state.archivedItems.includes(postId)) {
         // remove post id
@@ -47,6 +57,17 @@ export const getters = {
         commit('removeArchivedPost', index)
         dispatch('persistArchivedPosts')
         return postId
+      } else {
+        // ad Post id
+        commit('addArchivedPost', postId)
+        dispatch('persistArchivedPosts')
+        return postId
+      }
+    },
+    checkRead({state, commit, dispatch}, postId) {
+      if(state.archivedItems.includes(postId)) {
+        // exist
+        return
       } else {
         // ad Post id
         commit('addArchivedPost', postId)
@@ -62,13 +83,24 @@ export const getters = {
       return this.$axios.$get('/api/posts')
         .then((posts) => {
           commit('setPosts', posts)
+          return posts
         })
-      // return INITIAL_DATA.posts
+        // return INITIAL_DATA.posts
+    },
+    fetchPostById({commit}, postId) {
+      return this.$axios.$get('/api/posts')
+        .then((posts) => {
+          const selectedPost = posts.find((p) => p._id === postId)
+          commit('setPost', selectedPost)
+          // console.log(selectedPost)
+          return selectedPost
+        })
     },
     createPost({commit}, postData) {
       // create post on server, or persist data in localstorage
       postData._id = Math.random().toString(36).substr(2, 5)
       postData.createdAt = new Date().getTime()
+      postData.isRead = false
       // debugger
       return this.$axios.$post('/api/posts', postData)
               .then((res) => {
@@ -78,15 +110,19 @@ export const getters = {
               })
       // commit('clearPost', postData)
     },
-    updatePost({commit, state}, postData) {
+    updatePost({commit, state, dispatch}, postData) {
+      const archieveIndex = state.archivedItems.findIndex(pId => pId === postData._id)
       const index = state.items.findIndex((post) => {
         return post._id === postData._id
       })
+      // postData.isRead = false
       if(index !== -1) {
         return this.$axios.$patch(`/api/posts/${postData._id}`, postData)
           .then((res) => {
             console.log(res)
             commit('updatePost', {post: postData, index})
+            commit('removeArchivedPost', archieveIndex)
+            dispatch('persistArchivedPosts')
             return postData
           })
       }
@@ -120,6 +156,9 @@ export const mutations = {
   },
   setPosts(state, posts) {
     state.items = posts
+  },
+  setPost(state, post) {
+    state.item = post
   },
   addPost(state, post) {
     state.items.push(post)

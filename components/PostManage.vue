@@ -1,55 +1,63 @@
 <template>
-  <v-card class="pa-3 no-hover">
-    <v-form v-model="valid" ref="updatePostForm">
-      <v-row>
-        <v-col cols="12">
-          <v-btn small class="float-right" dark color="error" @click="deletePost" type="button">
-            Delete
-            <template v-slot:loader>
-              <span class="custom-loader">
-                <v-icon light>mdi-cached</v-icon>
-              </span>
-            </template>
-          </v-btn>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12" class="form-group">
-          <v-text-field label="Title *" outlined v-model="post.title" :rules="rules.titleRules" required></v-text-field>
-        </v-col>
-        <v-col cols="12" class="form-group">
-          <v-text-field label="Sub Title *" outlined v-model="post.subtitle" :rules="rules.subtitleRules" required></v-text-field>
-        </v-col>
-        <v-col cols="12" class="form-group">
-          <v-textarea
-            class=""
-            label="Content *"
-            rows="1"
-            auto-grow
-            outlined
-            :rules="rules.contentRules"
-            v-model="post.content"
-          ></v-textarea>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12">
-          <v-btn color="" class="float-right" dark :loading="loading" :disabled="!valid" @click="updatePost" type="button">
-                  Update
-            <template v-slot:loader>
-              <span class="custom-loader">
-                <v-icon light>mdi-cached</v-icon>
-              </span>
-            </template>
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-form>
-
-  </v-card>
+    <v-card class="pa-4 no-hover">
+      <v-form v-model="valid" ref="updatePostForm">
+        <v-row>
+          <v-col cols="12">
+            <v-btn small class="float-right" dark color="error" @click="deletePost" type="button">
+              Delete
+              <template v-slot:loader>
+                <span class="custom-loader">
+                  <v-icon light>mdi-cached</v-icon>
+                </span>
+              </template>
+            </v-btn>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" class="form-group">
+            <v-text-field label="Title *" outlined v-model="post.title" :rules="rules.titleRules" required></v-text-field>
+          </v-col>
+          <v-col cols="12" class="form-group">
+            <v-text-field label="Sub Title *" outlined v-model="post.subtitle" :rules="rules.subtitleRules" required></v-text-field>
+          </v-col>
+          <v-col cols="12" class="form-group">
+            <v-textarea
+              class=""
+              label="Content *"
+              rows="1"
+              auto-grow
+              outlined
+              :rules="rules.contentRules"
+              v-model="post.content"
+            ></v-textarea>
+          </v-col>
+          <v-col cols="12" class="form-group mb-2 content-preview">
+            <h2 class="title mb-2">Content Preview</h2>
+            <div v-html="compiledMarkdown"></div>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
+            <v-btn color="" class="float-right" dark :loading="loading" :disabled="!(!checkChanges && valid)" @click="updatePost" type="button">
+                    Update
+              <template v-slot:loader>
+                <span class="custom-loader">
+                  <v-icon light>mdi-cached</v-icon>
+                </span>
+              </template>
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-form>
+    </v-card>
+  <!-- <simplebar class="post-manage">
+  </simplebar> -->
 </template>
 
 <script>
+  import DOMPurify from 'dompurify'
+  import simplebar from 'simplebar-vue';
+  import 'simplebar/dist/simplebar.min.css';
   export default {
     /* props: {
       postData: {
@@ -70,9 +78,11 @@
         content: '', */
       }
     },
+    components: {
+      simplebar
+    },
     watch: {
       postData(data, oldValue) {
-        // debugger
         this.post = {...data}
       },
       loader () {
@@ -104,7 +114,18 @@
           ],
           valid: false,
         }
-      }
+      },
+      compiledMarkdown() {
+        if (process.client) {
+          // return marked(this.post.content, {sanitize: true})
+          return DOMPurify.sanitize(marked(this.post.content))
+        }
+        return ''
+      },
+      checkChanges() {
+        return JSON.stringify(this.postData) === JSON.stringify(this.post) ? true : false
+        // this.simpleComparision()
+      },
     },
     methods: {
       updatePost() {
@@ -127,6 +148,14 @@
 </script>
 
 <style lang="scss" scoped>
+.post-manage {
+  // height: calc(100vh - (56px + 60px + 100px + 24px));
+  @media screen and(min-width: 960px){
+    overflow: hidden;
+    overflow-y: auto;
+    height: calc(100vh - (64px + 60px + 76px + 24px));
+  }
+}
 .form-group {
     padding-top: 0;
     &:last-child {
