@@ -1,6 +1,8 @@
 # my-nuxt-posts
 
-> My fabulous Nuxt.js project
+> Simple Blogs Project to create/update/delete Blogs using Nuxt.js & Vuetify
+
+> To check live version please checkout **[here](https://nuxt-post.herokuapp.com/)**
 
 ## Build Setup
 
