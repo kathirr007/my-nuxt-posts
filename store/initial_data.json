@@ -4,7 +4,7 @@
       "_id": "1",
       "title": "Title of the first post Updated 03",
       "subtitle": "First Post Subtitle Updated!",
-      "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque veniam atque aliquam dolore animi delectus distinctio. Iure aliquid, quae qui impedit sit voluptatibus corrupti modi reprehenderit vel quas? Quam, est. This is updated to check toggle read.",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque veniam atque aliquam dolore animi delectus distinctio. Iure aliquid, quae qui impedit sit voluptatibus corrupti modi reprehenderit vel quas? Quam, est. This is updated to check toggle read.\n",
       "createdAt": 1576752997551,
       "isRead": false
     },
